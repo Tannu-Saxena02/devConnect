@@ -1,33 +1,36 @@
 const express=require('express');
 const app=express();
-
-
-// app.use((req,res)=>{//request handler-every time it send a response to every request
-//  res.send("HELLO from the server!")  
-// })
-// app.use("/",(req,res)=>{//request handler-every time it send a response to every request
-//  res.send("HELLO from the dashboard!")   
-// })
-// app.use("/hello",(req,res)=>{
-//  res.send("HELLO HELLO HELL !")   
-// })
-// app.use("/test",(req,res)=>{
-//  res.send("HELLO from the test!")   
-// })
-//this will match to all HTTP methods API calls to /test
-app.use("/users",(req,res)=>{
-    res.send("HELLO from the users!")  
-})
-app.get("/users",(req,res)=>{
-    res.send({"firstName":"Akshay","lastName":"Saini","age":25})  
-})
-app.post("/users",(req,res)=>{
-    res.send("Data saved successfully!")  
-})
-app.delete("/users",(req,res)=>{
-    res.send("Data delete successfully!")  
-})
-
+// /user,/user/
+app.get("/user", (req, res) => {
+    //query
+    console.log(req.query);
+    res.send({"firstName":"Akshay","lastName":"Kumar"});
+});
+app.get("/user/:userId/:name/:password", (req, res) => {
+    //dynamic params
+    console.log(req.params);
+    res.send({"firstName":"Akshay","lastName":"Kumar"});
+});
+//regex start with anything but end with fly
+app.get(/.*fly$/, (req, res) => {
+    res.send({"firstName":"Akshay","lastName":"Kumar"});
+});
+// we can send b multiple times
+app.get("/ab+c", (req, res) => {
+    res.send({"firstName":"Akshay","lastName":"Kumar"});
+});
+// we can send anything between ab cd
+app.get("/ab*cd", (req, res) => {
+    res.send("data can passed in between successfully");
+});
+// in which b is optional
+app.get("/ab?c", (req, res) => {
+  res.send({ matched: "/abc or /ac" });
+});
+// in which bc is optional
+app.get("/a(bc)?d", (req, res) => {
+  res.send("matched");
+});
 app.listen(3000,()=>{
     console.log('Server is running on port 3000');
 })

@@ -19,3 +19,7 @@
 -Install postman app and make a workspace/Collection test API call.
 -http method- GET,POST,PUT,DELETE,PATCH and other and types of APIS REST, graphQL etc.
 -write logic to handle GET,POST,PATCH,DELETE APIS calls and test them on POSTMAN.
+-Explore routing and use of ?,+,(),* in the routes.
+-Use of regex /a/, /*fly$/
+-Reading the query params in the route
+-Reading the dynamic route
