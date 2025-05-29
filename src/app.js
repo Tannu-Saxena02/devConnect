@@ -4,14 +4,14 @@ const {adminAuth,userAuth}=require('./middlewares/auth.js');
 
 //middleware for error handling
 app.get("/userdata",(req,res)=>{
-    try{
+//    try{ 
         throw new error("shjhdhdhdh");
         res.send("User data sent successfully");
-    }
-    catch(err){
-        console.error(err);
-        res.status(500).send("Internal Server Error");
-    }
+    // }
+    // catch(err){
+    //     console.error(err);
+    //     res.status(500).send("Internal Server Error");
+    // }
 
 })
 app.use("/",(err,req,res,next)=>{

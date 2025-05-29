@@ -17,7 +17,7 @@
 -Play with routes and routes extensions ex /hello,  /, /hello/2 , /xyz
 -Orders of the route matters a lot
 -Install postman app and make a workspace/Collection test API call.
--http method- GET,POST,PUT,DELETE,PATCH and other and types of APIS REST, graphQL etc.
+-http method- GET,POST,PUT,DELETE,PATCH and other and types of APIS REST, graphQL etc and http status code
 -write logic to handle GET,POST,PATCH,DELETE APIS calls and test them on POSTMAN.
 -Explore routing and use of ?,+,(),* in the routes.
 -Use of regex /a/, /*fly$/
