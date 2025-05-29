@@ -23,3 +23,9 @@
 -Use of regex /a/, /*fly$/
 -Reading the query params in the route
 -Reading the dynamic route
+
+-Multiple route handlers - Play with the code
+-next()
+-next function and errors along with res.send()
+-app.use("/route",r1,[r2,r3],r4,r5)
+
