@@ -2,6 +2,22 @@ const express=require('express');
 const app=express();
 const {adminAuth,userAuth}=require('./middlewares/auth.js');
 
+//middleware for error handling
+app.get("/userdata",(req,res)=>{
+    try{
+        throw new error("shjhdhdhdh");
+        res.send("User data sent successfully");
+    }
+    catch(err){
+        console.error(err);
+        res.status(500).send("Internal Server Error");
+    }
+
+})
+app.use("/",(err,req,res,next)=>{
+    if(err)
+       res.status(500).send("Something went wrong!");
+})
 //handle auth middleware for all get,post,put,delete
 app.use("/admin",adminAuth)
 
