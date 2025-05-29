@@ -1,5 +1,28 @@
 const express=require('express');
 const app=express();
+const {adminAuth,userAuth}=require('./middlewares/auth.js');
+
+//handle auth middleware for all get,post,put,delete
+app.use("/admin",adminAuth)
+
+
+app.get("/user/login",(req,res,next)=>{
+   res.send("User login successfully")   
+})
+
+app.get("/user/data",userAuth,(req,res,next)=>{
+   res.send("User data sent")   
+})
+
+app.get("/admin/getAllData",(req,res,next)=>{
+   res.send("User data sent")   
+})
+app.get("/admin/getAllData",(req,res,next)=>{
+   res.send("User data sent")   
+})
+app.get("/admin/deleteUser",(req,res,next)=>{
+   res.send("User data deleted")   
+})
 // /user,/user/
 app.get("/user", (req, res) => {
     //query
