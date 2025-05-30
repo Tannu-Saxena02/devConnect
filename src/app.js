@@ -1,76 +1,31 @@
 const express=require('express');
 const app=express();
-const {adminAuth,userAuth}=require('./middlewares/auth.js');
+const {connectDB}=require('./config/database.js');
+const User=require('./models/user');
 
-//middleware for error handling
-app.get("/userdata",(req,res)=>{
-//    try{ 
-        throw new error("shjhdhdhdh");
-        res.send("User data sent successfully");
-    // }
-    // catch(err){
-    //     console.error(err);
-    //     res.status(500).send("Internal Server Error");
-    // }
-
+app.post("/signup",async (req,res)=>{
+    const user=new User({
+        firstName:"unnat",
+        lastName:"saxena",
+        emailId:"akshaysaini02@gmail.com",
+        password:"akshay@123",
+        age:18,
+        gender:"Male"
+    })
+    try{
+        await user.save();
+        res.send("User added successfully");
+    }
+    catch(err)
+    {
+        res.status(400).send("Error saving the user",err.message);
+    }
 })
-app.use("/",(err,req,res,next)=>{
-    if(err)
-       res.status(500).send("Something went wrong!");
-})
-//handle auth middleware for all get,post,put,delete
-app.use("/admin",adminAuth)
-
-
-app.get("/user/login",(req,res,next)=>{
-   res.send("User login successfully")   
-})
-
-app.get("/user/data",userAuth,(req,res,next)=>{
-   res.send("User data sent")   
-})
-
-app.get("/admin/getAllData",(req,res,next)=>{
-   res.send("User data sent")   
-})
-app.get("/admin/getAllData",(req,res,next)=>{
-   res.send("User data sent")   
-})
-app.get("/admin/deleteUser",(req,res,next)=>{
-   res.send("User data deleted")   
-})
-// /user,/user/
-app.get("/user", (req, res) => {
-    //query
-    console.log(req.query);
-    res.send({"firstName":"Akshay","lastName":"Kumar"});
-});
-app.get("/user/:userId/:name/:password", (req, res) => {
-    //dynamic params
-    console.log(req.params);
-    res.send({"firstName":"Akshay","lastName":"Kumar"});
-});
-//regex start with anything but end with fly
-app.get(/.*fly$/, (req, res) => {
-    res.send({"firstName":"Akshay","lastName":"Kumar"});
-});
-// we can send b multiple times
-app.get("/ab+c", (req, res) => {
-    res.send({"firstName":"Akshay","lastName":"Kumar"});
-});
-// we can send anything between ab cd
-app.get("/ab*cd", (req, res) => {
-    res.send("data can passed in between successfully");
-});
-// in which b is optional
-app.get("/ab?c", (req, res) => {
-  res.send({ matched: "/abc or /ac" });
-});
-// in which bc is optional
-app.get("/a(bc)?d", (req, res) => {
-  res.send("matched");
-});
-app.listen(3000,()=>{
+connectDB().then(()=>{
+    console.log("Database connection established");
+    app.listen(3000,()=>{
     console.log('Server is running on port 3000');
 })
-//nodemon it will automatically refresh/restart the server when we make changes to the code
+}).catch((err)=>{
+    console.error("Database cannot be established",err);
+})
