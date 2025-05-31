@@ -62,6 +62,38 @@ app.get("/userId",async(req,res)=>{
         res.status(400).send("Something went wrong");
     }
 })
+// delete the user from the database
+app.delete("/user",async(req,res)=>{
+    const userId=req.body.id;
+    try{
+        //  await User.findByIdAndDelete(userId);
+         await User.findByIdAndDelete({_id:userId});
+         res.send("User deleted successfully");
+    }
+    catch(err)
+    {
+        res.status(400).send("Something went wrong");
+    }
+  
+
+})
+//update the data of the user
+app.patch("/user",async(req,res)=>{
+    const userId=req.body.id;
+    const data=req.body;
+    try{
+        const userData= await User.findByIdAndUpdate({_id:userId},data,{
+            returnDocument:"after"
+         })
+         console.log(userData);
+         
+         res.send("User updated successfully");
+    }
+  catch(err){
+        res.status(400).send("Something went wrong");
+  }
+
+})
 connectDB().then(()=>{
     console.log("Database connection established");
     app.listen(3000,()=>{
