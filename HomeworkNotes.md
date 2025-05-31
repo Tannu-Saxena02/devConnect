@@ -43,3 +43,11 @@
 -Create a POST /signup API to add data to database
 -Push some documents using API calls from POSTMAN
 -Error handling using try and catch
+
+-difference between js objects and JSON
+-Add the express.json middleware to your app
+-make your sign up API dynamic to receive data from the end user.
+-User.findOne with duplicate email,ids which object returned
+-API get user by email
+-API -Feed API-GET/feed - get all the users from the database
+-API get user by id
