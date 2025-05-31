@@ -48,6 +48,20 @@ app.get("/feed",async(req,res)=>{
     }
   
 })
+// get user by id -homework
+app.get("/userId",async(req,res)=>{
+    const userId=req.body.id;
+    try{
+       const users= await User.findOne({_id:userId});
+       if(!users)
+            res.status(404).send("User not found");
+        else
+            res.send(users);
+    }
+    catch(err){
+        res.status(400).send("Something went wrong");
+    }
+})
 connectDB().then(()=>{
     console.log("Database connection established");
     app.listen(3000,()=>{

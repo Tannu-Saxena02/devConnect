@@ -51,3 +51,9 @@
 -API get user by email
 -API -Feed API-GET/feed - get all the users from the database
 -API get user by id
+-Create a delete user API
+-Difference between PUT and PATCH
+-API -Update a user
+-Explore the mongoose Documention for models method
+-What are the options in a model.findOneAndUpdate method,explore more about it.
+-API update the user bu emailID.
