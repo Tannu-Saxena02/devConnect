@@ -56,4 +56,4 @@
 -API -Update a user
 -Explore the mongoose Documention for models method
 -What are the options in a model.findOneAndUpdate method,explore more about it.
--API update the user bu emailID.
+-API update the user by emailID.

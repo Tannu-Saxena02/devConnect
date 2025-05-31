@@ -2,6 +2,7 @@ const express=require('express');
 const app=express();
 const {connectDB}=require('./config/database.js');
 const User=require('./models/user');
+const user = require('./models/user');
 app.use(express.json());// we send data in json but server is unable to read data in json format we need middleware
 // this is express middleware to parse JSON bodies and convert into JavaScript objects that is added into request can get into body
 app.post("/signup",async (req,res)=>{
@@ -93,6 +94,19 @@ app.patch("/user",async(req,res)=>{
         res.status(400).send("Something went wrong");
   }
 
+})
+//-API update the user by emailID.
+app.patch("/userEmail",async(req,res)=>{
+    const userEmail=req.body.emailId;
+    const data=req.body;
+    try{
+        const userData= await User.findOneAndUpdate({emailId:userEmail},data);
+        console.log(userData);
+        res.send("User updated successfully");    
+    }
+   catch(err){
+        res.status(400).send("Something went wrong");
+   }
 })
 connectDB().then(()=>{
     console.log("Database connection established");
