@@ -84,7 +84,7 @@ app.patch("/user:/userId", async (req, res) => {
   const data = req.body;
 
   try {
-    const ALLOWED_UPDATES = [
+    const ALLOWED_UPDATES = [//api level validation
       "photoUrl",
       "about",
       "gender",

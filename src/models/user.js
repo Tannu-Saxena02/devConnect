@@ -1,6 +1,7 @@
 const mongoose=require('mongoose');
+const validator=require('validator');
 
-const userSchema=new mongoose.Schema({
+const userSchema=new mongoose.Schema({//schema level validation
     firstName:{
         type:String,
         required:true,
@@ -15,11 +16,21 @@ const userSchema=new mongoose.Schema({
         lowercase:true,//validation in schema
         unique:true,
         required:true,
-        trim:true
+        trim:true,
+        validate(value){
+            if(validator.isEmail(value)){
+                throw new Error("Invalid email address "+value);
+            }
+        }
     },
     password:{
         type:String,
-        required:true
+        required:true,
+         validate(value){
+            if(validator.isStrongPassword(value)){
+                throw new Error("Enter a Strong Password "+value);
+            }
+        }
     },
     age:{
         type:Number,
@@ -35,7 +46,12 @@ const userSchema=new mongoose.Schema({
 },
     photoUrl:{
         type:String,
-        default:"https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pnrao.com%2F%3Fattachment_id%3D8917&psig=AOvVaw0o1LC2y9kynGFKhEVG1fm6&ust=1748777426992000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCNiqsdzNzY0DFQAAAAAdAAAAABAE"
+        default:"https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pnrao.com%2F%3Fattachment_id%3D8917&psig=AOvVaw0o1LC2y9kynGFKhEVG1fm6&ust=1748777426992000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCNiqsdzNzY0DFQAAAAAdAAAAABAE",
+         validate(value){
+            if(validator.isURL(value)){
+                throw new Error("Invalid Photo URL"+value);
+            }
+        }
     },
     skills:{
         type:[String]
