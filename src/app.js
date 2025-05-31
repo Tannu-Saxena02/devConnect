@@ -15,7 +15,7 @@ app.post("/signup",async (req,res)=>{
     }
     catch(err)
     {
-        res.status(400).send("Error saving the user",err.message);
+        res.status(400).send("Error saving the user"+err.message);
     }
 })
 //get user by email
@@ -84,14 +84,15 @@ app.patch("/user",async(req,res)=>{
     const data=req.body;
     try{
         const userData= await User.findByIdAndUpdate({_id:userId},data,{
-            returnDocument:"after"
+            returnDocument:"after",
+            runValidators:true
          })
          console.log(userData);
          
          res.send("User updated successfully");
     }
   catch(err){
-        res.status(400).send("Something went wrong");
+        res.status(400).send("Something went wrong"+err.message);
   }
 
 })
