@@ -79,23 +79,38 @@ app.delete("/user",async(req,res)=>{
 
 })
 //update the data of the user
-app.patch("/user",async(req,res)=>{
-    const userId=req.body.id;
-    const data=req.body;
-    try{
-        const userData= await User.findByIdAndUpdate({_id:userId},data,{
-            returnDocument:"after",
-            runValidators:true
-         })
-         console.log(userData);
-         
-         res.send("User updated successfully");
-    }
-  catch(err){
-        res.status(400).send("Something went wrong"+err.message);
-  }
+app.patch("/user:/userId", async (req, res) => {
+  const userId = req.params?.id;
+  const data = req.body;
 
-})
+  try {
+    const ALLOWED_UPDATES = [
+      "photoUrl",
+      "about",
+      "gender",
+      "age",
+      "skills",
+    ];
+    const isUpdatesAllowed = Object.keys(data).every((k) =>
+      ALLOWED_UPDATES.includes(k)
+    );
+
+    if (!isUpdatesAllowed) {
+      throw new Error("updates are not allowed");
+    }
+    if(data?.skills.length>10)
+        throw new Error("skills should be less than 10");
+    const userData = await User.findByIdAndUpdate({ _id: userId }, data, {
+      returnDocument: "after",
+      runValidators: true,
+    });
+    console.log(userData);
+
+    res.send("User updated successfully");
+  } catch (err) {
+    res.status(400).send("Something went wrongg" + err.message);
+  }
+});
 //-API update the user by emailID.
 app.patch("/userEmail",async(req,res)=>{
     const userEmail=req.body.emailId;

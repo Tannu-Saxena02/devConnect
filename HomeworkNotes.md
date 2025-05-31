@@ -64,3 +64,8 @@
 -Create a custom validate function for gender
 -Improve the db schema - Put all approate validations on each field in schema
 -Add timestamps to the user Schema
+-Add api level validation on PATCH request signup POST API
+-Data sanitizing - Add API validation for each field
+-Install validator
+-Explore validator library function and use validator functs for password,email,URL
+-NEVER TRUST req.body
