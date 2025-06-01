@@ -82,3 +82,8 @@
 -Install jsonwebtoken
 -In login API,after email and password validation,create a JWT token and send it to user in cookies
 -read the cookies inside your profile API and find the loggedin user
+-userAuth middleware
+-add the userAuth middleware in profile and a new sendConnectionRequest API
+-set the expiry of JWT token and cookies to 7 days and disadvantage of not expiry the token or cookie when we login in cybercafe others computers
+-Create userSchema method to create JWT
+-Create userschema method to compare password

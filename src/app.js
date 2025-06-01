@@ -46,10 +46,12 @@ app.post("/login", async (req, res) => {
     const { emailId, password } = req.body;
     const user = await User.findOne({ emailId: emailId });
     if (!user) res.send("Invalid credentials");  //deencrypt the password
-    const isPasswordValid = await bcrypt.compare(password, user.password); //password, encrypted password
+    const isPasswordValid = await user.validatePassword(password) //password, encrypted password
     if (isPasswordValid) {
-      const token = await jwt.sign({ _id: user._id }, "DevTinder@1234$"); //creds,secret key
-      res.cookie("token", token);
+      const token = await user.getJWT();
+      res.cookie("token", token,{
+        expires: new Date(Date.now() + 8 * 3600000) 
+      });
       res.send("Login successfully");
     } else {
       res.status(400).send("Invalid credentials");
@@ -66,7 +68,17 @@ app.get("/profile", userAuthentication, async (req, res) => {
     res.status(400).send("Error " + err.message);
   }
 });
-
+app.post("/sendConnectionRequest",userAuthentication,(req,res)=>{
+    try{
+        const user=req.user;
+        console.log("Connection request sent");
+        res.send(user.firstName+" Connection request sent");
+        
+    }
+    catch(err){
+        res.status(400).send("Error " + err.message);
+    }
+})
 connectDB()
   .then(() => {
     console.log("Database connection established");
