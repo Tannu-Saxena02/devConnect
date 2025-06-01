@@ -5,8 +5,12 @@ const User = require("./models/user");
 const user = require("./models/user");
 const { validateSignUpData } = require("./utils/validation.js");
 const bcrypt = require("bcrypt");
+var cookieParser = require('cookie-parser')
+const {userAuthentication}= require("./middlewares/auth.js")
 app.use(express.json()); // we send data in json but server is unable to read data in json format we need middleware
 // this is express middleware to parse JSON bodies and convert into JavaScript objects that is added into request can get into body
+app.use(cookieParser());// this is express middleware to parse cookies and convert into JavaScript objects that is added into request can get into cookies
+var jwt = require('jsonwebtoken');
 app.post("/signup", async (req, res) => {
   try {
     //validate the user data
@@ -23,7 +27,6 @@ app.post("/signup", async (req, res) => {
       skills,
     } = req.body;
     const passwordHash = await bcrypt.hash(password, 10);
-
     const user = new User({
       firstName,
       lastName,
@@ -47,15 +50,28 @@ app.post("/login", async (req, res) => {
     const user = await User.findOne({ emailId: emailId });
     if (!user) res.send("Invalid credentials");
     //deencrypt the password
-    const isPasswordValid = await bcrypt.compare(password, hash); //password, encrypted password
-    if (isPasswordValid) res.send("Login successfully");
+    const isPasswordValid = await bcrypt.compare(password, user.password); //password, encrypted password
+    if (isPasswordValid){
+        const token=await jwt.sign({_id:user._id},"DevTinder@1234$")//creds,secret key
+        res.cookie("token",token);
+        res.send("Login successfully");
+    } 
     else {
       res.status(400).send("Invalid credentials");
     }
   } catch (err) {
-    res.status(400).send("Error saving the user" + err.message);
+    res.status(400).send("Error " + err.message);
   }
 });
+app.get("/profile",userAuthentication,async(req,res)=>{
+    try{
+        const user=req.user;
+        res.send(user);
+    }
+    catch(err){
+        res.status(400).send("Error " + err.message);
+    }
+})
 //get user by email
 app.get("/user", async (req, res) => {
   const userEmail = req.body.emailId;

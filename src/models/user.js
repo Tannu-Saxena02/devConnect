@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema(
       required: true,
       trim: true,
       validate(value) {
-        if (validator.isEmail(value)) {
+        if (!validator.isEmail(value)) {
           throw new Error("Invalid email address " + value);
         }
       },
@@ -29,7 +29,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       validate(value) {
-        if (validator.isStrongPassword(value)) {
+        if (!validator.isStrongPassword(value)) {
           throw new Error("Enter a Strong Password " + value);
         }
       },
