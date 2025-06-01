@@ -52,12 +52,16 @@ const userSchema = new mongoose.Schema(
     photoUrl: {
       type: String,
       default:
-        "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pnrao.com%2F%3Fattachment_id%3D8917&psig=AOvVaw0o1LC2y9kynGFKhEVG1fm6&ust=1748777426992000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCNiqsdzNzY0DFQAAAAAdAAAAABAE",
+        "https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png",
       validate(value) {
-        if (validator.isURL(value)) {
+        if (!validator.isURL(value)) {
           throw new Error("Invalid Photo URL" + value);
         }
       },
+    },
+    about:{
+        type:String,
+        default:"This is a default about of the user"
     },
     skills: {
       type: [String],
