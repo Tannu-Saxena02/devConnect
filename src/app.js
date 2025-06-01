@@ -3,15 +3,51 @@ const app=express();
 const {connectDB}=require('./config/database.js');
 const User=require('./models/user');
 const user = require('./models/user');
+const {validateSignUpData}=require('./utils/validation.js');
+const bcrypt = require('bcrypt');
 app.use(express.json());// we send data in json but server is unable to read data in json format we need middleware
 // this is express middleware to parse JSON bodies and convert into JavaScript objects that is added into request can get into body
 app.post("/signup",async (req,res)=>{
-    console.log(req.body);
-    
-    const user=new User(req.body)
     try{
+        //validate the user data
+        validateSignUpData(req);
+         //encrypt the password
+        const{firstName,lastName,emailId,password,age,gender,photoUrl,skills}=req.body;
+        const passwordHash=await bcrypt.hash(password,10);
+
+        const user=new User({
+        firstName,
+        lastName,
+        emailId,
+        password:passwordHash,
+        age,
+        gender,
+        photoUrl,
+        skills
+    })
         await user.save();
         res.send("User added successfully");
+    }
+    catch(err)
+    {
+        res.status(400).send("ERROR : "+err.message);
+    }
+})
+//login
+app.post("/login",async (req,res)=>{
+    
+    try{
+        const{emailId,password}=req.body;
+        const user=await User.findOne({emailId:emailId});
+        if(!user)
+            res.send("Invalid credentials");
+        //deencrypt the password
+        const isPasswordValid=await bcrypt.compare(password, hash);//password, encrypted password
+        if(isPasswordValid)
+           res.send("Login successfully");
+        else{
+            res.status(400).send("Invalid credentials")
+        }
     }
     catch(err)
     {
@@ -79,8 +115,8 @@ app.delete("/user",async(req,res)=>{
 
 })
 //update the data of the user
-app.patch("/user:/userId", async (req, res) => {
-  const userId = req.params?.id;
+app.patch("/user/:userId", async (req, res) => {
+  const userId = req.params?.userId;
   const data = req.body;
 
   try {
@@ -108,7 +144,7 @@ app.patch("/user:/userId", async (req, res) => {
 
     res.send("User updated successfully");
   } catch (err) {
-    res.status(400).send("Something went wrongg" + err.message);
+    res.status(400).send("Something went wrong " + err.message);
   }
 });
 //-API update the user by emailID.
