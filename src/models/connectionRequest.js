@@ -1,8 +1,10 @@
 const mongoose=require('mongoose');
+const User=require("./user");
 //when we have millions of entries in database so query become expensive it takes so much time to do operations so we use indexing
 const connectionRequestSchema=new mongoose.Schema({
     fromUserId:{
         type:mongoose.Schema.Types.ObjectId,
+        ref:"User",//reference to the user collection
         required:true
     },
     toUserId:{

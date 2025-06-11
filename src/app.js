@@ -5,12 +5,14 @@ var cookieParser = require("cookie-parser");
 const { authRouter }=require("./routes/auth.js")
 const { profileRouter }=require("./routes/profile.js")
 const { requestRouter }=require("./routes/request.js")
+const { userRouter }=require("./routes/user.js")
 app.use(express.json()); // to parse JSON bodies request
 app.use(cookieParser()); // to parse cookies
 
 app.use("/",authRouter);
 app.use("/",profileRouter);
 app.use("/",requestRouter);
+app.use("/",userRouter);
 
 
 connectDB()
