@@ -5,11 +5,11 @@ const userAuthentication = async (req, res, next) => {
   try {
     const cookies = req.cookies;
     const { token } = cookies;
-    if (!token) throw new Error("Invalid token");
+    if (!token) res.status(404).send("Please login");
     const decodeMessage = await jwt.verify(token, "DevTinder@1234$");
     const { _id } = decodeMessage;
     const user = await User.findById(_id);
-    if (!user) throw new Error("User does not exist");
+    if (!user) res.status(400).send("User does not exist");
     req.user = user;
     next();
   } catch (err) {

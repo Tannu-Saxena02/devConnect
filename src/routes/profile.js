@@ -18,8 +18,8 @@ profileRouter.get("/profile/view", userAuthentication, async (req, res) => {
 profileRouter.patch("/profile/edit", userAuthentication, async (req, res) => {
   try {
     //patch-validation for each field
-    if (!vallidateProfileData(req)) {
-      throw new Error("updates are not allowed");
+    if (!vallidateProfileData(req,res)) {
+      res.status(400).send("updates are not allowed");
     }
     const loggedInUser = req.user;
     console.log(loggedInUser);
@@ -45,14 +45,14 @@ profileRouter.post("/forgotpassword",userAuthentication,async(req,res)=>{
         const isPasswordValid= await bcrypt.compare(password ,passwordHash);
         if(!isPasswordValid)
         {
-            throw new Error("Invalid Existing password");
+            res.status(400).send("Invalid Existing password");
         }
         if(!validator.isStrongPassword(newPassword))
         {
-            throw new Error("new Password is not strong enough");
+            res.status(400).send("new Password is not strong enough");
         }
         if (password === newPassword) 
-          throw new Error("New password must be different from current password.");
+          res.status(400).send("New password must be different from current password.");
         const updatedPasswordHash = await bcrypt.hash(newPassword, 10);
         req.user.password=updatedPasswordHash;
          await req.user.save();        

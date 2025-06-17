@@ -1,20 +1,20 @@
 const validator = require('validator');
-function validateSignUpData(req){
+function validateSignUpData(req,res){
     const{firstName,lastName,emailId,password}=req.body;
     if(!firstName || !lastName)
     {
-        throw new Error("First name and last name are required");
+        res.status(400).send("First name and last name are required");
     }
     else if(!validator.isEmail(emailId))
     {
-            throw new Error("Invalid email");
+            res.status(400).send("Invalid email");
     }
     else if(!validator.isStrongPassword(password))
     {
-        throw new Error("Password is not strong enough");
+        res.status(400).send("Password is not strong enough");
     }
 }
-function vallidateProfileData(req){
+function vallidateProfileData(req,res){
     const userData=req.body;
     const ALLOWED_UPDATES = [
       //api level validation

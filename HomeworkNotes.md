@@ -117,3 +117,15 @@
 - Read about ref and populate : https://mongoosejs.com/docs/populate.html
 - Create GET /user/request/received with all the checks
 - Create GET /user/connections
+
+- Logic for GET /feed API
+- Explore the $nin(not in array),$and , $ne(not equal to) and other query operators
+- pagination
+
+
+NOTES
+/feed?page=1&limit=10 =>1-10 => .skip(0) & .limit(10)
+/feed?page=2&limit=10 =>11-20 => .skip(10) & .limit(10)
+/feed?page=3&limit=10 =>21-30 => .skip(20) & .limit(10)
+/feed?page=4&limit=10 =>31-40 => .skip(30) & .limit(10)
+ so skip=(page-1)*limit

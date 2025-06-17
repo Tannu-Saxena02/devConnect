@@ -7,7 +7,7 @@ var jwt = require("jsonwebtoken");
 
 authRouter.post("/signup", async (req, res) => {
   try {
-    validateSignUpData(req); //validate the user data
+    validateSignUpData(req,res); //validate the user data
     const {  //encrypt the password
       firstName,
       lastName,
@@ -31,8 +31,13 @@ authRouter.post("/signup", async (req, res) => {
       skills,
     });
     await user.save();
-    res.send("User added successfully");
+     const token = await user.getJWT();
+    res.cookie("token", token,{
+        expires: new Date(Date.now() + 8 * 3600000) 
+    });
+    res.json({message:"User added successfully",data:user});
   } catch (err) {
+    console.log(err.message);
     res.status(400).send("ERROR : " + err.message);
   }
 });
@@ -48,7 +53,7 @@ authRouter.post("/login", async (req, res) => {
       res.cookie("token", token,{
         expires: new Date(Date.now() + 8 * 3600000) 
       });
-      res.send("Login successfully");
+      res.send(user);
     } else {
       res.status(400).send("Invalid credentials");
     }
@@ -56,12 +61,13 @@ authRouter.post("/login", async (req, res) => {
     res.status(400).send("Error " + err.message);
   }
 });
-module.exports = {
-    authRouter
-};
+
 authRouter.post("/logout",(req,res)=>{
     res.cookie("token",null,{
         expires: new Date(Date.now())
     })
     res.send("Logout successfully");
 })
+module.exports = {
+    authRouter
+};
