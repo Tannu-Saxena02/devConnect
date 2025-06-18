@@ -129,3 +129,14 @@ NOTES
 /feed?page=3&limit=10 =>21-30 => .skip(20) & .limit(10)
 /feed?page=4&limit=10 =>31-40 => .skip(30) & .limit(10)
  so skip=(page-1)*limit
+
+
+ TODO backend:
+validation and code correction backend(testing)
+otp Send API & verify otp API (done)
+: https://dev.to/manthanank/building-an-otp-verification-system-with-nodejs-and-mongodb-2p0o
+- read about SMTP server and how it work with send mail
+Goggle auth API (done)
+deployment
+payment gateway
+chat Feature
