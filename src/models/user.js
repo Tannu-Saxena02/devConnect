@@ -29,7 +29,6 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: true,
       validate(value) {
         if (!validator.isStrongPassword(value)) {
           throw new Error("Enter a Strong Password " + value);
@@ -59,29 +58,38 @@ const userSchema = new mongoose.Schema(
         }
       },
     },
-    about:{
-        type:String,
-        default:"This is a default about of the user"
+    about: {
+      type: String,
+      default: "This is a default about of the user",
     },
     skills: {
       type: [String],
+    },
+    authSource: {
+      type: String,
+      enum: ["self", "google"],
+      default: "self",
     },
   },
   {
     timestamps: true,
   }
 );
-userSchema.methods.getJWT=async function(){// this not access in arrow function
-    const user=this;
-    const token=await jwt.sign({ _id: user._id }, "DevTinder@1234$",{
-            expiresIn: "1d"
-    }); //creds,secret key
-    return token;
-}
-userSchema.methods.validatePassword=async function(passwordInputByUser){
-    const user=this;
-    const passwordHash=user.password;
-    const isPasswordValid= await bcrypt.compare(passwordInputByUser, user.password);
-    return isPasswordValid;
-}
+userSchema.methods.getJWT = async function () {
+  // this not access in arrow function
+  const user = this;
+  const token = await jwt.sign({ _id: user._id }, "DevTinder@1234$", {
+    expiresIn: "1d",
+  }); //creds,secret key
+  return token;
+};
+userSchema.methods.validatePassword = async function (passwordInputByUser) {
+  const user = this;
+  const passwordHash = user.password;
+  const isPasswordValid = await bcrypt.compare(
+    passwordInputByUser,
+    user.password
+  );
+  return isPasswordValid;
+};
 module.exports = mongoose.model("User", userSchema); //name of Model,schema

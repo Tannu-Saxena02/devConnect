@@ -4,6 +4,8 @@ const { validateSignUpData } = require("../utils/validation.js");
 const bcrypt = require("bcrypt");
 const User = require("../models/user");
 var jwt = require("jsonwebtoken");
+const { OAuth2Client } = require('google-auth-library');
+const client = new OAuth2Client();
 
 authRouter.post("/signup", async (req, res) => {
   try {
@@ -68,6 +70,45 @@ authRouter.post("/logout",(req,res)=>{
     })
     res.send("Logout successfully");
 })
+authRouter.post("/google-auth",async(req,res)=>{
+  const { credential, client_id } = req.body;
+  try {
+    // Verify the ID token with Google's API
+    const ticket = await client.verifyIdToken({
+      idToken: credential,
+      audience: client_id,
+    });
+    const payload = ticket.getPayload();
+
+    const { email, given_name, family_name } = payload;
+
+    // Check if the user already exists in the database
+    let user = await User.findOne({ email });
+    if (!user) {
+      // Create a new user if they don't exist
+      user = await User.create({
+        firstName: `${given_name}`,
+        lastName:family_name,
+        emailId:email,
+        authSource: 'google',
+      });
+    }
+
+    // Generate a JWT token
+     const token = await user.getJWT();
+    res.cookie("token", token,{
+        expires: new Date(Date.now() + 8 * 3600000) 
+    });
+
+    // Send the token as a cookie and response
+    res
+      .status(200)
+      .json({ message: 'Authentication successful', user });
+  } catch (err) {
+    console.error('Error during Google Authentication:', err);
+    res.status(400).json({ error: 'Authentication failed', details: err });
+  }
+});
 module.exports = {
     authRouter
 };
