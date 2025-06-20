@@ -4,6 +4,7 @@ const app = express();
 const { connectDB } = require("./config/database.js");
 var cookieParser = require("cookie-parser");
 var cors = require('cors')
+const http= require("http");
 
 
 const { authRouter }=require("./routes/auth.js")
@@ -11,6 +12,8 @@ const { profileRouter }=require("./routes/profile.js")
 const { requestRouter }=require("./routes/request.js")
 const { userRouter }=require("./routes/user.js");
 const { otpRouter } = require("./routes/otp.js");
+const  initializeSocket  = require("./utils/socket.js");
+const chatRouter = require('./routes/chat.js');
 app.use(cors({
   origin: 'http://localhost:5173',   // Allow frontend origin
   credentials: true                  // Allow cookies or credentials
@@ -25,11 +28,14 @@ app.use("/",profileRouter);
 app.use("/",requestRouter);
 app.use("/",userRouter);
 app.use("/",otpRouter);
+app.use("/",chatRouter);
+const server=http.createServer(app);
+initializeSocket(server);
 
 
 connectDB().then(() => {
     console.log("Database connection established");
-    app.listen(process.env.PORT, () => {
+    server.listen(process.env.PORT, () => {
       console.log("Server is running on port 3000");
     });
   })

@@ -20,9 +20,7 @@ requestRouter.post("/request/send/:status/:toUserId",userAuthentication,async(re
                 {fromUserId,toUserId},
                 {fromUserId : toUserId,toUserId : fromUserId},
             ]
-        })
-        console.log(fromUserId+" "+toUserId);
-        
+        })        
         if(existingConnectionRequest)
             res.status(400).send("Connection request already exists");
         const  connectionRequest=new ConnectionRequest({
@@ -31,7 +29,6 @@ requestRouter.post("/request/send/:status/:toUserId",userAuthentication,async(re
             status
         })
         const data=await connectionRequest.save();
-        console.log(data);
         
         res.json({
             message:req.user.firstName+" "+status+" in "+toUser.firstName,
@@ -51,13 +48,11 @@ requestRouter.post("/request/review/:status/:requestId",userAuthentication,async
         const allowedStatus=["accepted","rejected"];
         if(!allowedStatus.includes(status))
          res.status(400).send("status not allowed");
- console.log("heyy");
         const connectionRequest=await ConnectionRequest.findOne({
             _id:requestId,
             toUserId:loggedInUser._id,
             status:"interested"
         })
-        console.log(connectionRequest);
         
         if(!connectionRequest)
             res.status(404).json({message:"Connection request not found"});

@@ -122,6 +122,7 @@
 - Explore the $nin(not in array),$and , $ne(not equal to) and other query operators
 - pagination
 
+- Manage multiple environement (how we do it for local & production in single repo):https://www.npmjs.com/package/dotenv
 
 NOTES
 /feed?page=1&limit=10 =>1-10 => .skip(0) & .limit(10)

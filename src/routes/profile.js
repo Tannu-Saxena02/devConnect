@@ -22,7 +22,6 @@ profileRouter.patch("/profile/edit", userAuthentication, async (req, res) => {
       res.status(400).send("updates are not allowed");
     }
     const loggedInUser = req.user;
-    console.log(loggedInUser);
     Object.keys(req.body).forEach((key) => {
            loggedInUser[key] = req.body[key];
     });
