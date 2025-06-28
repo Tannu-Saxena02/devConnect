@@ -21,7 +21,7 @@ app.use(cors({
 
 app.use(express.json()); // to parse JSON bodies request
 app.use(cookieParser()); // to parse cookies
-
+app.use('/uploads', express.static('uploads'));
 
 app.use("/",authRouter);
 app.use("/",profileRouter);

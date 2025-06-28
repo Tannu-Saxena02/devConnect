@@ -70,6 +70,8 @@ const userSchema = new mongoose.Schema(
       enum: ["self", "google"],
       default: "self",
     },
+    isOnline: { type: Boolean, default: false },
+    lastSeen: { type: Date },
   },
   {
     timestamps: true,
