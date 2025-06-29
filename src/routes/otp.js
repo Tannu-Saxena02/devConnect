@@ -28,7 +28,6 @@ otpRouter.post("/sendOTP",async(req,res)=>{
 
         res.status(200).json({ success: true, message: 'OTP sent successfully' });
     } catch (error) {
-        console.error('Error sending OTP:', error);
         res.status(500).json({ success: false, error: 'Internal server error' });
     }
 })
@@ -46,7 +45,6 @@ otpRouter.post("/verifyOTP",async(req,res)=>{
             res.status(400).json({ success: false, error: 'Invalid OTP' });
         }
     } catch (error) {
-        console.error('Error verifying OTP:', error);
         res.status(500).json({ success: false, error: 'Internal server error' });
     }
 })

@@ -44,21 +44,16 @@ chatRouter.get("/status/:userId", userAuthentication, async (req, res) => {
        res.status(400).send("User does not exist");
     }
       const user = await User.findById(userId).select("firstName lastName photoUrl isOnline lastSeen");
-      console.log(user);
-      
       res.send(user);
 
   } catch (err) {
-    console.error(err);
    res.status(400).send("Error " + err.message);
   }
 });
 
 ;
 
-chatRouter.post('/upload', upload.single('file'), (req, res) => {
-  console.log(process.env.BASE_URL+"/uploads/" +req.file.filename);
-  
+chatRouter.post('/upload', upload.single('file'), (req, res) => {  
   res.json({
     fileUrl: process.env.BASE_URL+"/uploads/" +req.file.filename,
   });
