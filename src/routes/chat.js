@@ -32,22 +32,22 @@ chatRouter.get("/chat/:targetUserId", userAuthentication, async (req, res) => {
       });
       await chat.save();
     }
-    res.json(chat);
+    res.json({ success: true, message:"chat fetched successfully",data:chat});
   } catch (err) {
-    res.status(400).send("Error " + err.message);
+    res.status(400).send({ success: false, error:err.message});
   }
 });
 chatRouter.get("/status/:userId", userAuthentication, async (req, res) => {
   try {
      const userId = req.params.userId;
     if (!userId) {
-       res.status(400).send("User does not exist");
+       res.status(400).send({ success: false, error:"User does not exist"});
     }
       const user = await User.findById(userId).select("firstName lastName photoUrl isOnline lastSeen");
-      res.send(user);
+      res.send({ success: true, message:"status fetch",data:user});
 
   } catch (err) {
-   res.status(400).send("Error " + err.message);
+   res.status(400).send({ success: false, error:err.message});
   }
 });
 

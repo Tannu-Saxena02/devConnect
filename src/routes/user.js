@@ -15,13 +15,13 @@ userRouter.get("/user/requests/received",userAuthentication,async(req,res)=>{
             "fromUserId",
           USER_SAFE_DATA
         )  
-        res.json({message:"Data fetched successfully",
+        res.json({ success: true,message:"Data fetched successfully",
             data:connectionRequest
         })
     }
     catch(err)
     {
-        res.status(400).send("ERROR",err.message);
+        res.status(400).send({ success: false, error:err.message});
     }
 })
 userRouter.get("/user/connections",userAuthentication,async(req,res)=>{
@@ -42,11 +42,11 @@ userRouter.get("/user/connections",userAuthentication,async(req,res)=>{
             }
             return row.fromUserId;
         })
-        res.json({data});
+        res.json({ success: true, message:"connections fetch successfully",data:data});
     }
     catch(err)
     {
-        res.status(400).send({message:err.message});
+        res.status(400).send({ success: false, error:err.message});
     }
 })
 userRouter.get("/feed",userAuthentication,async(req,res)=>{
@@ -76,10 +76,10 @@ userRouter.get("/feed",userAuthentication,async(req,res)=>{
         .select(USER_SAFE_DATA)
         .skip(skip)
         .limit(limit)
-        res.status(200).json({ data: users });
+        res.status(200).json({ success: true, message:"feed fetch successfully", data: users });
     }
     catch(err){
-        res.status(400).send("ERROR "+err.message);
+        res.status(400).send({ success: false, error:err.message});
     }
 })
 module.exports={

@@ -37,9 +37,9 @@ authRouter.post("/signup", async (req, res) => {
     res.cookie("token", token,{
         expires: new Date(Date.now() + 8 * 3600000) 
     });
-    res.json({message:"User added successfully",data:user});
+    res.json({ success: true, message:"User added successfully",data:user});
   } catch (err) {
-    res.status(400).send("ERROR : " + err.message);
+    res.status(400).send({ success: false, error:err.message});
   }
 });
 
@@ -54,12 +54,12 @@ authRouter.post("/login", async (req, res) => {
       res.cookie("token", token,{
         expires: new Date(Date.now() + 8 * 3600000) 
       });
-      res.send(user);
+      res.send({ success: true, message:"Login Successful",data:user});
     } else {
-      res.status(400).send("Invalid credentials");
+      res.status(400).send({ success: false, error:"Invalid credentials"});
     }
   } catch (err) {
-    res.status(400).send("Error " + err.message);
+    res.status(400).send({ success: false, error:err.message});
   }
 });
 
@@ -67,7 +67,7 @@ authRouter.post("/logout",(req,res)=>{
     res.cookie("token",null,{
         expires: new Date(Date.now())
     })
-    res.send("Logout successfully");
+    res.send({ success: true, message:"Logout successfully"});
 })
 authRouter.post("/google-auth",async(req,res)=>{
   const { credential, client_id } = req.body;
@@ -82,7 +82,7 @@ authRouter.post("/google-auth",async(req,res)=>{
     const { email, given_name, family_name } = payload;
 
     // Check if the user already exists in the database
-    let user = await User.findOne({ email });
+    let user = await User.findOne({emailId: email });
     if (!user) {
       // Create a new user if they don't exist
       user = await User.create({
@@ -102,10 +102,10 @@ authRouter.post("/google-auth",async(req,res)=>{
     // Send the token as a cookie and response
     res
       .status(200)
-      .json({ message: 'Authentication successful', user });
+      .json({ success: true, message: 'Authentication successful',data:user});
   } catch (err) {
     console.error('Error during Google Authentication:', err);
-    res.status(400).json({ error: 'Authentication failed', details: err });
+    res.status(400).json({ success: false, error: 'Authentication failed '+err});
   }
 });
 module.exports = {

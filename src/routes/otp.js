@@ -16,7 +16,7 @@ otpRouter.post("/sendOTP",async(req,res)=>{
     try {
         const { email } = req.body;
         const otp = generateOTP(); // Generate a 6-digit OTP
-        const newOTP = new Otps({ email, otp });
+        const newOTP = new Otps({ email, otp:String(otp) });
         await newOTP.save();
 
         // Send OTP via email
@@ -28,14 +28,14 @@ otpRouter.post("/sendOTP",async(req,res)=>{
 
         res.status(200).json({ success: true, message: 'OTP sent successfully' });
     } catch (error) {
-        res.status(500).json({ success: false, error: 'Internal server error' });
+        res.status(500).json({ success: false, error: 'Internal server error'+error });
     }
 })
 
 otpRouter.post("/verifyOTP",async(req,res)=>{
     try {
         const { email, otp } = req.body;
-        const existingOTP = await Otps.findOneAndDelete({ email, otp });
+        const existingOTP = await Otps.findOneAndDelete({ email, otp:otp });
 
         if (existingOTP) {
             // OTP is valid
