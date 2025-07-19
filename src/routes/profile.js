@@ -45,7 +45,14 @@ profileRouter.post("/resetpassword", userAuthentication, async (req, res) => {
   try {
     //password,new password
     const { password, newPassword } = req.body;
-    const passwordHash = req.user.password;
+    const passwordHash = req.user?.password;
+    if (!passwordHash) {
+      return res.status(400).json({
+        success: false,
+        error:
+          "This account uses Google Sign-In. Reset password is not applicable.",
+      });
+    }
     const isPasswordValid = await bcrypt.compare(password, passwordHash);
     if (!isPasswordValid) {
       res
@@ -82,7 +89,13 @@ profileRouter.post("/forgot-password", async (req, res) => {
     return res
       .status(400)
       .send({ success: false, error: "User does not exists" });
-
+  if (!passwordHash) {
+    return res.status(400).json({
+      success: false,
+      error:
+        "This account uses Google Sign-In. forgot password is not applicable.",
+    });
+  }
   const isPasswordValid = await bcrypt.compare(newpassword, passwordHash);
   if (isPasswordValid) {
     return res.status(400).send({
