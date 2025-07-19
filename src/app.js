@@ -14,8 +14,12 @@ const { userRouter }=require("./routes/user.js");
 const { otpRouter } = require("./routes/otp.js");
 const  initializeSocket  = require("./utils/socket.js");
 const chatRouter = require('./routes/chat.js');
+const allowedOrigins = [
+  'http://localhost:5173',             // For dev
+  'https://devconnect.world'           // For production
+];
 app.use(cors({
-  origin: 'http://localhost:5173',   // Allow frontend origin
+  origin: allowedOrigins,   // Allow frontend origin
   credentials: true                  // Allow cookies or credentials
 }));
 
