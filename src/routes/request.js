@@ -61,26 +61,28 @@ requestRouter.post(
       const { status, requestId } = req.params;
       const allowedStatus = ["accepted", "rejected"];
       if (!allowedStatus.includes(status))
-        res.status(400).send({ success: false, error: "status not allowed" });
+        return res
+          .status(400)
+          .send({ success: false, error: "status not allowed" });
       const connectionRequest = await ConnectionRequest.findOne({
-        _id: requestId,
+        fromUserId: requestId,
         toUserId: loggedInUser._id,
         status: "interested",
       });
 
       if (!connectionRequest)
-        res
+        return res
           .status(404)
           .json({ success: false, error: "Connection request not found" });
       connectionRequest.status = status;
       const data = await connectionRequest.save();
-      res.send({
+      return res.send({
         success: true,
         message: "Connection request " + status,
         data: data,
       });
     } catch (err) {
-      res.status(400).send({ success: false, error: err.message });
+      return res.status(400).send({ success: false, error: err.message });
     }
   }
 );

@@ -37,9 +37,6 @@ authRouter.post("/signup", async (req, res) => {
     const token = await user.getJWT();
     res.cookie("token", token, {
       expires: new Date(Date.now() + 8 * 3600000),
-      httpOnly: true,
-      secure: true, // required for HTTPS
-      sameSite: "None",
     });
     res.json({ success: true, message: "User added successfully", data: user });
   } catch (err) {
@@ -57,9 +54,6 @@ authRouter.post("/login", async (req, res) => {
       const token = await user.getJWT();
       res.cookie("token", token, {
         expires: new Date(Date.now() + 8 * 3600000),
-        httpOnly: true,
-        secure: true, // required for HTTPS
-        sameSite: "None",
       });
       res.send({ success: true, message: "Login Successful", data: user });
     } else {
@@ -73,9 +67,6 @@ authRouter.post("/login", async (req, res) => {
 authRouter.post("/logout", (req, res) => {
   res.cookie("token", null, {
     expires: new Date(Date.now()),
-    httpOnly: true,
-    secure: true, // required for HTTPS
-    sameSite: "None",
   });
   res.send({ success: true, message: "Logout successfully" });
 });
@@ -107,9 +98,6 @@ authRouter.post("/google-auth", async (req, res) => {
     const token = await user.getJWT();
     res.cookie("token", token, {
       expires: new Date(Date.now() + 8 * 3600000),
-      httpOnly: true,
-      secure: true, // required for HTTPS
-      sameSite: "None",
     });
 
     // Send the token as a cookie and response

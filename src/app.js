@@ -19,7 +19,7 @@ const allowedOrigins = [
   'https://devconnect.world'           // For production
 ];
 app.use(cors({
-  origin: 'https://devconnect.world',   // Allow frontend origin
+  origin: 'http://localhost:5173',   // Allow frontend origin
   credentials: true                  // Allow cookies or credentials
 }));
 
