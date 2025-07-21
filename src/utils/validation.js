@@ -3,15 +3,15 @@ function validateSignUpData(req,res){
     const{firstName,lastName,emailId,password}=req.body;
     if(!firstName || !lastName)
     {
-        res.status(400).send("First name and last name are required");
+        res.status(400).send({ success: false, error: "First name and last name are required"});
     }
     else if(!validator.isEmail(emailId))
     {
-            res.status(400).send("Invalid email");
+            res.status(400).send({ success: false, error: "Invalid email"});
     }
     else if(!validator.isStrongPassword(password))
     {
-        res.status(400).send("Password is not strong enough");
+        res.status(400).send({ success: false, error:"Password is not strong enough"});
     }
 }
 function vallidateProfileData(req,res){
