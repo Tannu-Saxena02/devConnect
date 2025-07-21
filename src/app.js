@@ -14,6 +14,7 @@ const { userRouter }=require("./routes/user.js");
 const { otpRouter } = require("./routes/otp.js");
 const  initializeSocket  = require("./utils/socket.js");
 const chatRouter = require('./routes/chat.js');
+const paymentRouter = require('./routes/payment.js');
 const allowedOrigins = [
   'http://localhost:5173',             // For dev
   'https://devconnect.world'           // For production
@@ -33,6 +34,7 @@ app.use("/",requestRouter);
 app.use("/",userRouter);
 app.use("/",otpRouter);
 app.use("/",chatRouter);
+app.use("/",paymentRouter);
 const server=http.createServer(app);
 initializeSocket(server);
 

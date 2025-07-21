@@ -5,7 +5,6 @@ var jwt = require("jsonwebtoken");
 
 const userSchema = new mongoose.Schema(
   {
-    //schema level validation
     firstName: {
       type: String,
       required: true,
@@ -17,7 +16,7 @@ const userSchema = new mongoose.Schema(
     },
     emailId: {
       type: String,
-      lowercase: true, //validation in schema
+      lowercase: true,
       unique: true,
       required: true,
       trim: true,
@@ -42,7 +41,6 @@ const userSchema = new mongoose.Schema(
     gender: {
       type: String,
       validate(value) {
-        // this validate method is only called when user is created
         if (!["male", "female", "other"].includes(value)) {
           throw new Error("Gender data is not valid");
         }
@@ -70,6 +68,13 @@ const userSchema = new mongoose.Schema(
       enum: ["self", "google"],
       default: "self",
     },
+    isPremium: {
+      type: Boolean,
+      default: false,
+    },
+    membershipType: {
+      type: String,
+    },
     isOnline: { type: Boolean, default: false },
     lastSeen: { type: Date },
   },
@@ -78,11 +83,10 @@ const userSchema = new mongoose.Schema(
   }
 );
 userSchema.methods.getJWT = async function () {
-  // this not access in arrow function
   const user = this;
   const token = await jwt.sign({ _id: user._id }, "DevTinder@1234$", {
     expiresIn: "1d",
-  }); //creds,secret key
+  }); 
   return token;
 };
 userSchema.methods.validatePassword = async function (passwordInputByUser) {
@@ -94,4 +98,4 @@ userSchema.methods.validatePassword = async function (passwordInputByUser) {
   );
   return isPasswordValid;
 };
-module.exports = mongoose.model("User", userSchema); //name of Model,schema
+module.exports = mongoose.model("User", userSchema);
