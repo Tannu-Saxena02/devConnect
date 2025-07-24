@@ -65,7 +65,7 @@ requestRouter.post(
           .status(400)
           .send({ success: false, error: "status not allowed" });
       const connectionRequest = await ConnectionRequest.findOne({
-        fromUserId: requestId,
+        _id: requestId,
         toUserId: loggedInUser._id,
         status: "interested",
       });
