@@ -4,6 +4,7 @@ const requestRouter = express.Router();
 const { userAuthentication } = require("../middlewares/auth.js");
 const ConnectionRequest = require("../models/connectionRequest.js");
 const User = require("../models/user.js");
+const sendEmail = require("../utils/sendEmail.js");
 requestRouter.post(
   "/request/send/:status/:toUserId",
   userAuthentication,
@@ -36,6 +37,13 @@ requestRouter.post(
         status,
       });
       const data = await connectionRequest.save();
+      const emailRes = await sendEmail.run(
+        "A new friend request from " + req.user.firstName,
+        status == "interested"
+          ? "connection request send to " + toUser.firstName
+          : "connection request ignored for " + toUser.firstName
+      );
+      console.log(emailRes);
 
       res.send({
         success: true,
