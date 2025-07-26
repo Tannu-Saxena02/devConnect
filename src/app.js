@@ -5,6 +5,7 @@ const { connectDB } = require("./config/database.js");
 var cookieParser = require("cookie-parser");
 var cors = require('cors')
 const http= require("http");
+// require("./utils/cronjobs.js"); to schedule cron jobs
 
 
 const { authRouter }=require("./routes/auth.js")
