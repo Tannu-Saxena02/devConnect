@@ -18,6 +18,18 @@
 - Orders of the route matters a lot
 - Install postman app and make a workspace/Collection test API call.
 - http method- GET,POST,PUT,DELETE,PATCH and other and types of APIS REST, graphQL etc and http status code
+- GraphQl & REST :https://medium.com/@elijahbanjo/understanding-graphql-apis-from-a-rest-api-point-of-view-08196600c667
+- Different types of APIS SOAP vs REST vs GraphQL : https://www.freecodecamp.org/news/rest-vs-graphql-apis/
+  
+- Types of APIS:Based on Architecture / Style
+  
+  REST (Representational State Transfer)
+  
+  SOAP (Simple Object Access Protocol)
+  
+  GraphQL
+
+  gRPC (Google Remote Procedure Call)
 - write logic to handle GET,POST,PATCH,DELETE APIS calls and test them on POSTMAN.
 - Explore routing and use of ?,+,(),* in the routes.
 - Use of regex /a/, /*fly$/
