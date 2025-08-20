@@ -5,8 +5,8 @@
 - Create a server -  ✅ Done Project Related
 - Listen to port 7777 -  ✅ Done Project Related
 - Write request handlers for /test,/hello
-- Install nodemon and update scripts inside package.json
-- What are dependencies
+- Install nodemon and update scripts inside package.json : https://chatgpt.com/c/68a59b48-3004-832b-91a6-7a2d80902b5e
+- What are dependencies: https://chatgpt.com/c/68a59b48-3004-832b-91a6-7a2d80902b5e
 - #### What is the use of "-g" while npm install
 The `-g` flag stands for **global install**. It determines where the package is installed and how it can be accessed.
 
@@ -24,13 +24,13 @@ The `-g` flag stands for **global install**. It determines where the package is 
 Useful for tools you want to run from anywhere (e.g., nodemon, npm, create-react-app, typescript, etc.).
 - Difference between caret and tilde (^ and ~)
 https://chatgpt.com/c/68a58b1c-4980-8321-aa91-e3b8a93e6003
-- initialise git
-- gitignore
-- create a remote repo on github
-- Push all code to remote origin
-- Play with routes and routes extensions ex /hello,  /, /hello/2 , /xyz
-- Orders of the route matters a lot
-- Install postman app and make a workspace/Collection test API call.
+- initialise git-  ✅ Done Project Related
+- gitignore-  ✅ Done Project Related
+- create a remote repo on github-  ✅ Done Project Related
+- Push all code to remote origin-  ✅ Done Project Related
+- Play with routes and routes extensions ex /hello,  /, /hello/2 , /xyz-  ✅ Done Project Related(check vscode)
+- Orders of the route matters a lot-  ✅ Done Project Related(check vscode)
+- Install postman app and make a workspace/Collection test API call. - ✅ Done Project Related
 - http method- GET,POST,PUT,DELETE,PATCH and other and types of APIS REST, graphQL etc and http status code
 - HTTP Method: https://www.w3schools.com/tags/ref_httpmethods.asp
 - Difference between PUT and Patch- RN Notes
@@ -53,16 +53,16 @@ https://chatgpt.com/c/68a58b1c-4980-8321-aa91-e3b8a93e6003
 - Reading the query params in the route
 - Reading the dynamic route
 
-- Multiple route handlers - Play with the code
-- next()
-- next function and errors along with res.send()
-- app.use("/route",r1,[r2,r3],r4,r5)
+- Multiple route handlers - Play with the code - ✅ Done Project Related(check Vscode)
+- next() - ✅ Done Project Related(check vscode)
+- next function and errors along with res.send()✅ Done Project Related(check vscode)
+- app.use("/route",r1,[r2,r3],r4,r5) : https://chatgpt.com/c/68a59e87-e444-832e-a6dd-73b993bdb0bd
 - What is middleware- NodeJs notes
-- How express js basically handles requests behind the scenes
-- Difference between app.use and app.all
-- write a dummy auth middleware for admin
-- Write a dummy auth middleware for all user routes except /user/login
-- Error handling app.use("/",(err,req,res,next)={});
+- How express js basically handles requests behind the scenes : https://chatgpt.com/c/68a59e87-e444-832e-a6dd-73b993bdb0bd
+- Difference between app.use and app.all : https://chatgpt.com/c/68a59e87-e444-832e-a6dd-73b993bdb0bd
+- write a dummy auth middleware for admin - ✅ Done Project Related (check vscode)
+- Write a dummy auth middleware for all user routes except /user/login  - ✅ Done Project Related(check vscode)
+- Error handling app.use("/",(err,req,res,next)={});✅ Done Project Related(check vscode)
 
 - Create a free cluster on mongodb official website(Mongo Atlas) - ✅ Done Project Related
 - Install mongoose library - ✅ Done Project Related
@@ -74,14 +74,14 @@ https://chatgpt.com/c/68a58b1c-4980-8321-aa91-e3b8a93e6003
 - Error handling using try and catch - ✅ Done Project Related
 
 - difference between js objects and JSON
-- Add the express.json middleware to your app
+- Add the express.json middleware to your app - ✅ Done Project Related
 - make your sign up API dynamic to receive data from the end user. - ✅ Done Project Related
 - User.findOne with duplicate email,ids which object returned
 - API get user by email - ✅ Done Project Related
 - API -Feed API-GET/feed - get all the users from the database - ✅ Done Project Related
 - API get user by id - ✅ Done Project Related
 - Create a delete user API - ✅ Done Project Related
-- Difference between PUT and PATCH
+- Difference between PUT and PATCH - RN notes
 - API -Update a user - ✅ Done Project Related
 - Explore the mongoose Documention for models method - ✅ Done Project Related
 - What are the options in a model.findOneAndUpdate method,explore more about it. - ✅ Done Project Related
