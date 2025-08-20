@@ -1,0 +1,21 @@
+# Frontend System Design:
+- HTTP/HTTPS, HTTP/2, HTTP/3
+- REST, GraphQL, gRPC
+- WebSockets, SSE, Polling
+- CORS, Auth, Cookies, Tokens
+- CDNs & Edge Delivery
+- Browser & CDN Caching strategies
+-  Compression (gzip, Brotli)
+- Image & Asset Optimization
+- Lazy Loading, Code Splitting, Tree Shaking
+- Prefetch, Preload, Preconnect, dns-prefetch
+-  CSR, SSR, SSG, ISR
+- Micro-frontends & modularization
+-  Client vs. Server State Management
+- Retry, Backoff, Circuit Breakers
+-  Offline-first, Service Workers
+- Error Handling & Graceful Degradation
+-  Feature Flags & A/B Testing
+- Security: XSS, CSRF, CSP, SameSite Cookies
+-  Observability: Logging, Error Tracking
+-   Core Web Vitals (LCP, CLS, INP, TTFB, FID)
