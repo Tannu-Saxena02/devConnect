@@ -87,7 +87,7 @@ https://chatgpt.com/c/68a58b1c-4980-8321-aa91-e3b8a93e6003
 - What are the options in a model.findOneAndUpdate method,explore more about it. - ✅ Done Project Related
 - API update the user by emailID. - ✅ Done Project Related
 
-- Explore schemaType options from the document 
+- Explore schemaType options from the document : https://mongoosejs.com/docs/schematypes.html
 - add required,unique,lowercase,min,maxLength,trim - ✅ Done Project Related
 - Add default in schema - ✅ Done Project Related
 - Create a custom validate function for gender - ✅ Done Project Related
@@ -100,7 +100,7 @@ https://chatgpt.com/c/68a58b1c-4980-8321-aa91-e3b8a93e6003
 - NEVER TRUST req.body  - ✅ Done Project Related
 
 - Validate data in signup API - ✅ Done Project Related
-- Install bcrypt package
+- Install bcrypt package 
 - Create passwordHash using bcrypt.hash & save the user in excrupted password
 - Create login API - ✅ Done Project Related
 - Compare password and throw errors if email or password is invalid. - ✅ Done Project Related
@@ -126,18 +126,18 @@ https://chatgpt.com/c/68a58b1c-4980-8321-aa91-e3b8a93e6003
 - Import these router in app.js - ✅ Done Project Related
 - Create POST/logout api - ✅ Done Project Related
 - Create PATCH/profile/edit - ✅ Done Project Related
-- Create PATCH/profile/password API => forgot password API
-- Make sure you validate all the data in every POST,PATCH APIs
+- Create PATCH/profile/password API => forgot password API - ✅ Done Project Related
+- Make sure you validate all the data in every POST,PATCH APIs - ✅ Done Project Related
 
-- Create connection Request Schema
-- Send Connection Request API
-- Proper validation of Data
+- Create connection Request Schema - ✅ Done Project Related
+- Send Connection Request API - ✅ Done Project Related
+- Proper validation of Data - ✅ Done Project Related
 - Think about all corner cases
 - $or and $and query in mongoose:https://www.mongodb.com/docs/manual/reference/operator/query/or/
 - schema.pre("save function")
-- Read more about indexes in mongodb
-- Why do we want index in mongodb?
-- What is the advantages and disadvantages of creating indexing?
+- Read more about indexes in mongodb : https://medium.com/@rtawadrous/introduction-to-database-indexes-9b488e243cc1
+- Why do we want index in mongodb? : https://medium.com/@rtawadrous/introduction-to-database-indexes-9b488e243cc1
+- What is the advantages and disadvantages of creating indexing? : https://medium.com/@rtawadrous/introduction-to-database-indexes-9b488e243cc1
 - Read this article about compound indexes-https://www.mongodb.com/docs/manual/core/indexes/index-types/index-compound/
 - ALWAYS THINK ABOUT CORNER CASES.
 
