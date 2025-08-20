@@ -4,7 +4,7 @@
 - Install express -  ✅ Done Project Related
 - Create a server -  ✅ Done Project Related
 - Listen to port 7777 -  ✅ Done Project Related
-- Write request handlers for /test,/hello
+- Write request handlers for /test,/hello-  ✅ Done Project Related(check vscode)
 - Install nodemon and update scripts inside package.json : https://chatgpt.com/c/68a59b48-3004-832b-91a6-7a2d80902b5e
 - What are dependencies: https://chatgpt.com/c/68a59b48-3004-832b-91a6-7a2d80902b5e
 - #### What is the use of "-g" while npm install
@@ -48,9 +48,9 @@ https://chatgpt.com/c/68a58b1c-4980-8321-aa91-e3b8a93e6003
 
   gRPC (Google Remote Procedure Call) :https://chatgpt.com/c/68a5951c-7958-8331-a0e8-1bdb7800d79c
 - write logic to handle GET,POST,PATCH,DELETE APIS calls and test them on POSTMAN.
-- Explore routing and use of ?,+,(),* in the routes.
-- Use of regex /a/, /*fly$/
-- Reading the query params in the route
+- Explore routing and use of ?,+,(),* in the routes.: https://chatgpt.com/c/68a5acd3-8a90-832e-8aa9-f8294c1a0986
+- Use of regex /a/, /*fly$/ : https://chatgpt.com/c/68a5acd3-8a90-832e-8aa9-f8294c1a0986
+- Reading the query params in the route - ✅ check Vscode
 - Reading the dynamic route
 
 - Multiple route handlers - Play with the code - ✅ Done Project Related(check Vscode)
@@ -73,7 +73,7 @@ https://chatgpt.com/c/68a58b1c-4980-8321-aa91-e3b8a93e6003
 - Push some documents using API calls from POSTMAN - ✅ Done Project Related
 - Error handling using try and catch - ✅ Done Project Related
 
-- difference between js objects and JSON
+- difference between js objects and JSON : https://www.geeksforgeeks.org/javascript/json-vs-javascript-object/
 - Add the express.json middleware to your app - ✅ Done Project Related
 - make your sign up API dynamic to receive data from the end user. - ✅ Done Project Related
 - User.findOne with duplicate email,ids which object returned
@@ -87,7 +87,7 @@ https://chatgpt.com/c/68a58b1c-4980-8321-aa91-e3b8a93e6003
 - What are the options in a model.findOneAndUpdate method,explore more about it. - ✅ Done Project Related
 - API update the user by emailID. - ✅ Done Project Related
 
-- Explore schemaType options from the document
+- Explore schemaType options from the document 
 - add required,unique,lowercase,min,maxLength,trim - ✅ Done Project Related
 - Add default in schema - ✅ Done Project Related
 - Create a custom validate function for gender - ✅ Done Project Related
