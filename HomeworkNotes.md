@@ -51,7 +51,7 @@ https://chatgpt.com/c/68a58b1c-4980-8321-aa91-e3b8a93e6003
 - Explore routing and use of ?,+,(),* in the routes.: https://chatgpt.com/c/68a5acd3-8a90-832e-8aa9-f8294c1a0986
 - Use of regex /a/, /*fly$/ : https://chatgpt.com/c/68a5acd3-8a90-832e-8aa9-f8294c1a0986
 - Reading the query params in the route - ✅ check Vscode
-- Reading the dynamic route
+- Reading the dynamic route : https://stackoverflow.com/questions/25623041/how-to-configure-dynamic-routes-with-express-js
 
 - Multiple route handlers - Play with the code - ✅ Done Project Related(check Vscode)
 - next() - ✅ Done Project Related(check vscode)
