@@ -68,7 +68,7 @@ https://chatgpt.com/c/68a58b1c-4980-8321-aa91-e3b8a93e6003
 - Install mongoose library - ✅ Done Project Related
 - Connect your application to the database "Connection-url"/devTinder - ✅ Done Project Related
 - Call the connectDB function and connect to database before starting application to 7777 - ✅ Done Project Related
-- Create a userSchema & userModel 
+- Create a userSchema & userModel : http://chatgpt.com/c/68a6b990-9a0c-832e-8aae-193affb1f847
 - Create a POST /signup API to add data to database - ✅ Done Project Related
 - Push some documents using API calls from POSTMAN - ✅ Done Project Related
 - Error handling using try and catch - ✅ Done Project Related
@@ -76,7 +76,9 @@ https://chatgpt.com/c/68a58b1c-4980-8321-aa91-e3b8a93e6003
 - difference between js objects and JSON : https://www.geeksforgeeks.org/javascript/json-vs-javascript-object/
 - Add the express.json middleware to your app - ✅ Done Project Related
 - make your sign up API dynamic to receive data from the end user. - ✅ Done Project Related
-- User.findOne with duplicate email,ids which object returned
+- User.findOne with duplicate email,ids which object returned :https://mongoosejs.com/docs/documents.html#retrieving
+- CMD: https://mongoosejs.com/docs/queries.html & https://chatgpt.com/c/68a6c2fc-87f8-8325-aa1b-8e66a34ae96f
+  
 - API get user by email - ✅ Done Project Related
 - API -Feed API-GET/feed - get all the users from the database - ✅ Done Project Related
 - API get user by id - ✅ Done Project Related
@@ -100,8 +102,8 @@ https://chatgpt.com/c/68a58b1c-4980-8321-aa91-e3b8a93e6003
 - NEVER TRUST req.body  - ✅ Done Project Related
 
 - Validate data in signup API - ✅ Done Project Related
-- Install bcrypt package 
-- Create passwordHash using bcrypt.hash & save the user in excrupted password
+- Install bcrypt package : https://www.geeksforgeeks.org/node-js/npm-bcrypt/
+- Create passwordHash using bcrypt.hash & save the user in excrupted password - ✅ Done Project Related
 - Create login API - ✅ Done Project Related
 - Compare password and throw errors if email or password is invalid. - ✅ Done Project Related
 
@@ -110,17 +112,17 @@ https://chatgpt.com/c/68a58b1c-4980-8321-aa91-e3b8a93e6003
 - Create GET /profile API and check if you get the cookie back - ✅ Done Project Related
 - Install jsonwebtoken - ✅ Done Project Related
 - In login API,after email and password validation,create a JWT token and send it to user in cookies - ✅ Done Project Related
-- read the cookies inside your profile API and find the loggedin user
+- read the cookies inside your profile API and find the loggedin user - ✅ Done Project Related
 - userAuth middleware - ✅ Done Project Related
 - add the userAuth middleware in profile and a new sendConnectionRequest API - ✅ Done Project Related
-- set the expiry of JWT token and cookies to 7 days and disadvantage of not expiry the token or cookie when we login in cybercafe others computers
+- set the expiry of JWT token and cookies to 7 days and disadvantage of not expiry the token or cookie when we login in cybercafe others computers: https://chatgpt.com/c/68a6b063-90bc-8332-98d0-4e214147445a
 - Create userSchema method to create JWT - ✅ Done Project Related
 - Create userschema method to compare password - ✅ Done Project Related
 
 - Explore tinder APIS
 - Create a list of all API you can think of in DEV TINDER
-- Group multiple routes under respective routers.
-- Read documentation for Express.Router
+- Group multiple routes under respective routers. - ✅ Done Project Related
+- Read documentation for Express.Router : https://expressjs.com/en/guide/routing.html
 - Create route folfer for managing auth,profile,request routers - ✅ Done Project Related
 - Create authRouter,profileRouter,requestRouter - ✅ Done Project Related
 - Import these router in app.js - ✅ Done Project Related
@@ -134,7 +136,7 @@ https://chatgpt.com/c/68a58b1c-4980-8321-aa91-e3b8a93e6003
 - Proper validation of Data - ✅ Done Project Related
 - Think about all corner cases
 - $or and $and query in mongoose:https://www.mongodb.com/docs/manual/reference/operator/query/or/
-- schema.pre("save function")
+- schema.pre("save function") : https://mongoosejs.com/docs/api/schema.html#Schema.prototype.pre()
 - Read more about indexes in mongodb : https://medium.com/@rtawadrous/introduction-to-database-indexes-9b488e243cc1
 - Why do we want index in mongodb? : https://medium.com/@rtawadrous/introduction-to-database-indexes-9b488e243cc1
 - What is the advantages and disadvantages of creating indexing? : https://medium.com/@rtawadrous/introduction-to-database-indexes-9b488e243cc1
@@ -142,16 +144,16 @@ https://chatgpt.com/c/68a58b1c-4980-8321-aa91-e3b8a93e6003
 - ALWAYS THINK ABOUT CORNER CASES.
 
 - Write code with proper validation for POST /request/review/:status:/reuqestId - ✅ Done Project Related
-- Thought Process -POST VS GET
+- Thought Process -POST VS GET :https://www.geeksforgeeks.org/php/difference-between-http-get-and-post-methods/
 - Read about ref and populate : https://mongoosejs.com/docs/populate.html
 - Create GET /user/request/received with all the checks  - ✅ Done Project Related
 - Create GET /user/connections  - ✅ Done Project Related
 
 - Logic for GET /feed API - ✅ Done Project Related
-- Explore the $nin(not in array),$and , $ne(not equal to) and other query operators
+- Explore the $nin(not in array),$and , $ne(not equal to) and other query operators : https://www.mongodb.com/docs/manual/reference/operator/query/nin/
 - pagination
 
-- Manage multiple environement (how we do it for local & production in single repo):https://www.npmjs.com/package/dotenv
+- Manage multiple environement (how we do it for local & production in single repo): https://www.npmjs.com/package/dotenv
 
 NOTES
 /feed?page=1&limit=10 =>1-10 => .skip(0) & .limit(10)
