@@ -154,6 +154,9 @@ https://chatgpt.com/c/68a58b1c-4980-8321-aa91-e3b8a93e6003
 - pagination
 
 - Manage multiple environement (how we do it for local & production in single repo): https://www.npmjs.com/package/dotenv
+- Socket & websockets(socket.io) & webRtc
+- How we implement websocket in devTinder
+- Read Frontend readme of devTInder
 
 NOTES
 /feed?page=1&limit=10 =>1-10 => .skip(0) & .limit(10)
