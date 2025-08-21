@@ -154,7 +154,8 @@ https://chatgpt.com/c/68a58b1c-4980-8321-aa91-e3b8a93e6003
 - pagination
 
 - Manage multiple environement (how we do it for local & production in single repo): https://www.npmjs.com/package/dotenv
-- Socket & websockets(socket.io) & webRtc
+- Socket & websockets(socket.io) & webRtc : https://www.geeksforgeeks.org/system-design/differences-between-websocket-and-webrtc-in-system-design/
+   https://chatgpt.com/c/68a6f2c9-3904-8320-be18-a36d0610fd6a and check notes
 - How we implement websocket in devTinder
 - Read Frontend readme of devTInder
 
