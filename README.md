@@ -1,21 +1,21 @@
 # Frontend System Design:
 - HTTP/HTTPS, HTTP/2, HTTP/3
-- REST, GraphQL, gRPC
-- WebSockets, SSE, Polling
-- CORS, Auth, Cookies, Tokens
-- CDNs & Edge Delivery
+- REST, GraphQL, gRPC : check readme
+- WebSockets, SSE, Polling 
+- CORS, Auth, Cookies, Tokens : check RN notes
+- CDNs & Edge Delivery : system design
 - Browser & CDN Caching strategies
--  Compression (gzip, Brotli)
-- Image & Asset Optimization
-- Lazy Loading, Code Splitting, Tree Shaking
-- Prefetch, Preload, Preconnect, dns-prefetch
--  CSR, SSR, SSG, ISR
-- Micro-frontends & modularization
--  Client vs. Server State Management
-- Retry, Backoff, Circuit Breakers
--  Offline-first, Service Workers
-- Error Handling & Graceful Degradation
--  Feature Flags & A/B Testing
-- Security: XSS, CSRF, CSP, SameSite Cookies
--  Observability: Logging, Error Tracking
--   Core Web Vitals (LCP, CLS, INP, TTFB, FID)
+-  Compression (gzip, Brotli) : not
+- Image & Asset Optimization : https://dev.to/lovishduggal/a-beginners-guide-to-asset-optimization-in-react-boosting-performance-and-user-experience-2p1j
+- Lazy Loading, Code Splitting, Tree Shaking : check RN Notes
+- Prefetch, Preload, Preconnect, dns-prefetch : only dns check notes
+-  CSR, SSR, SSG, ISR : https://dev.to/teyim/a-deep-dive-into-csr-ssr-ssg-and-isr-3513
+- Micro-frontends & modularization 
+-  Client vs. Server State Management 
+- Retry, Backoff, Circuit Breakers : not
+-  Offline-first, Service Workers : not
+- Error Handling & Graceful Degradation 
+-  Feature Flags & A/B Testing : not
+- Security: XSS, CSRF, CSP, SameSite Cookies 
+-  Observability: Logging, Error Tracking : basic
+- Core Web Vitals (LCP, CLS, INP, TTFB, FID) : not
