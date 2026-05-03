@@ -48,7 +48,7 @@ authRouter.post("/login", async (req, res) => {
   try {
     const { emailId, password } = req.body;
     const user = await User.findOne({ emailId: emailId });
-    if (!user) res.send("Invalid credentials"); //deencrypt the password
+    if (!user) return res.status(400).send({ success: false, error: "Invalid credentials" });
     const isPasswordValid = await user.validatePassword(password); //password, encrypted password
     if (isPasswordValid) {
       const token = await user.getJWT();

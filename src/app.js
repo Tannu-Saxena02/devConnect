@@ -1,5 +1,7 @@
 require('dotenv').config();
 const express = require("express");
+const swaggerUi = require("swagger-ui-express");
+const swaggerSpec = require("./config/swagger.js");
 const app = express();
 const { connectDB } = require("./config/database.js");
 var cookieParser = require("cookie-parser");
@@ -17,12 +19,12 @@ const  initializeSocket  = require("./utils/socket.js");
 const chatRouter = require('./routes/chat.js');
 const paymentRouter = require('./routes/payment.js');
 const allowedOrigins = [
-  'http://localhost:5173',             // For dev
-  'https://devconnect.world'           // For production
+  'http://localhost:5173',
+  'https://devconnect.world',
 ];
 app.use(cors({
-  origin: 'http://localhost:5173',   // Allow frontend origin
-  credentials: true                  // Allow cookies or credentials
+  origin: allowedOrigins,
+  credentials: true
 }));
 
 app.use(express.json()); // to parse JSON bodies request
@@ -36,6 +38,7 @@ app.use("/",userRouter);
 app.use("/",otpRouter);
 app.use("/",chatRouter);
 app.use("/",paymentRouter);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec, { explorer: true }));
 const server=http.createServer(app);
 initializeSocket(server);
 
