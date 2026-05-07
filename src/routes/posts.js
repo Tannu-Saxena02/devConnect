@@ -24,7 +24,7 @@ postsRouter.post("/createposts", userAuthentication, async (req, res) => {
 //get all post of the loggedin user// made some mistake
 postsRouter.get("/user/posts/:userId", userAuthentication, async (req, res) => {
   try {
-    const posts = await Post.find({ userId: req.params.userId });
+    const posts = await Post.find({ userId: req.params.userId }).sort({ createdAt: -1 });
     res.status(200).send({
       success: true,
       message: "Posts fetched successfully",
@@ -38,7 +38,7 @@ postsRouter.get("/user/posts/:userId", userAuthentication, async (req, res) => {
 // get all posts except loggedin user
 postsRouter.get("/user/allposts", userAuthentication, async (req, res) => {
   try {
-    const posts = await Post.find({ userId: { $ne: req.user._id } });
+    const posts = await Post.find({ userId: { $ne: req.user._id } }).sort({ createdAt: -1 });
     res.status(200).send({
       success: true,
       message: "Posts fetched successfully",
@@ -63,7 +63,7 @@ postsRouter.post("/posts/repost/:postId", userAuthentication, async (req, res) =
       visibility: post.visibility,
       userId: req.user._id,
       repostAuthorName: req.user.firstName+" "+req.user.lastName,
-      repostAuthorAvatar: req.user.avatar,
+      repostAuthorAvatar: req.user.photoUrl,
       authorName: post.authorName,
       authorAvatar: post.authorAvatar
     });
@@ -79,14 +79,17 @@ postsRouter.post("/posts/repost/:postId", userAuthentication, async (req, res) =
 });
 
 // to like & unlike a post
-postsRouter.post("/api/posts/like", userAuthentication, async (req, res) => {
+postsRouter.post("/posts/like", userAuthentication, async (req, res) => {
   try {
-    const {postId,actions} = req.body;
-    if(actions==="like"){
-      await Post.findByIdAndUpdate(postId, { $inc: { likes: 1 } });
-    }
-    else if(actions==="unlike"){
-      await Post.findOneAndUpdate({ _id: postId, likes: { $gt: 0 } }, { $inc: { likes: -1 } });
+    const {postId} = req.body;
+    const post = await Post.findById(postId);
+    if (!post) return res.status(404).send({ success: false, message: "Post not found" });
+
+    const alreadyLiked = post.likeByUsers.includes(req.user._id);
+    if (alreadyLiked) {
+      await Post.findOneAndUpdate({ _id: postId, likes: { $gt: 0 } }, { $inc: { likes: -1 }, $pull: { likeByUsers: req.user._id } });
+    } else {
+      await Post.findByIdAndUpdate(postId, { $inc: { likes: 1 }, $push: { likeByUsers: req.user._id } });
     }
     res.status(200).send({
       success: true,

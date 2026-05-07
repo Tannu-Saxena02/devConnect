@@ -29,16 +29,21 @@ const postSchema = new mongoose.Schema(
     },
     authorAvatar:{
       type:String,
-      default:"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+      default:"https://static.vecteezy.com/system/resources/previews/036/594/092/non_2x/man-empty-avatar-photo-placeholder-for-social-networks-resumes-forums-and-dating-sites-male-and-female-no-photo-images-for-unfilled-user-profile-free-vector.jpg"
     },
      repostAuthorName:{
       type:String
     },
     repostAuthorAvatar:{
       type:String,
-    }
+    },
+    likeByUsers:[{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    }]
   },
   { timestamps: true },
 );
+ 
 
 module.exports = mongoose.model("Post", postSchema);
