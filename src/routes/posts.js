@@ -3,6 +3,16 @@ const postsRouter = express.Router();
 const { userAuthentication } = require("../middlewares/auth");
 const Post = require("../models/post");
 
+
+const addOwnerFlags = (posts, userId) =>
+  posts.map((post) => {
+    const isOwner = post.userId?.toString() === userId.toString();
+    return {
+      ...post.toObject(),
+      isDeletable: isOwner,
+      isEditable: isOwner,
+    };
+  });
 // api to create a post
 postsRouter.post("/createposts", userAuthentication, async (req, res) => {
   try {
@@ -31,14 +41,16 @@ postsRouter.get("/user/posts/:userId", userAuthentication, async (req, res) => {
   try {
     const { page = 1, limit = 10 } = req.query;
     const skip = (page - 1) * limit;
-    const posts = await Post.find({ userId: req.user._id })
+    const posts = await Post.find({
+      userId: req.user._id,
+    })
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(Number(limit));
     res.status(200).send({
       success: true,
       message: "Posts fetched successfully",
-      data: posts,
+      data: addOwnerFlags(posts, req.user._id),
     });
   } catch (err) {
     res.status(400).send({ success: false, error: err.message });
@@ -130,5 +142,48 @@ postsRouter.post("/posts/like", userAuthentication, async (req, res) => {
     res.status(400).send({ success: false, error: err.message });
   }
 });
+// to delete a post
+
+postsRouter.post("/posts/delete/:postId",userAuthentication,async (req, res) => {
+    try {
+      const postId = req.params.postId;
+      const post = await Post.findById(postId);
+      if (!post) {
+        return res
+          .status(404)
+          .send({ success: false, message: "Post not found" });
+      }
+      await post.deleteOne();
+      res.status(200).send({
+        success: true,
+        message: "Post deleted successfully",
+      });
+    } catch (err) {
+      res.status(400).send({ success: false, error: err.message });
+    }
+  },
+);
+// to edit the post
+postsRouter.post("/posts/edit/:postId",userAuthentication,async (req, res) => {
+    try {
+      const postId = req.params.postId;
+      const post = await Post.findById(postId);
+      if (!post) {
+        return res
+          .status(404)
+          .send({ success: false, message: "Post not found" });
+      }
+      const updatedPost = await Post.findByIdAndUpdate(postId, req.body);
+      res.status(200).send({
+        success: true,
+        message: "Post updated successfully",
+        data: updatedPost,
+      });
+    } catch (err) {
+      res.status(400).send({ success: false, error: err.message });
+    }
+  },
+);
+
 
 module.exports = { postsRouter };
