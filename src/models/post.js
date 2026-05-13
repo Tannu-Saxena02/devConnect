@@ -37,10 +37,30 @@ const postSchema = new mongoose.Schema(
     repostAuthorAvatar:{
       type:String,
     },
+    isRepost:{
+      type:Boolean,
+      default:false
+    },
+    originalPostId:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Post",
+    },
+    repostCount:{
+      type:Number,
+      default:0
+    },
     likeByUsers:[{
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-    }]
+    }],
+    isDeletable:{
+      type:Boolean,
+      default:false
+    },
+    isEditable:{
+      type:Boolean,
+      default:false
+    }
   },
   { timestamps: true },
 );

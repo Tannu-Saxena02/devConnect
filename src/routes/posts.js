@@ -1,7 +1,10 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const postsRouter = express.Router();
 const { userAuthentication } = require("../middlewares/auth");
 const Post = require("../models/post");
+
+const isValidPostId = (postId) => mongoose.Types.ObjectId.isValid(postId);
 
 
 const addOwnerFlags = (posts, userId) =>
@@ -28,8 +31,7 @@ postsRouter.post("/createposts", userAuthentication, async (req, res) => {
     await post.save();
     res.status(200).send({
       success: true,
-      message: "Post created successfully",
-      data: post,
+      message: "Post created successfully"
     });
   } catch (err) {
     res.status(400).send({ success: false, error: err.message });
@@ -70,7 +72,7 @@ postsRouter.get("/user/allposts", userAuthentication, async (req, res) => {
     res.status(200).send({
       success: true,
       message: "Posts fetched successfully",
-      data: posts,
+      data: addOwnerFlags(posts, req.user._id),
     });
   } catch (err) {
     res.status(400).send({ success: false, error: err.message });
@@ -78,10 +80,7 @@ postsRouter.get("/user/allposts", userAuthentication, async (req, res) => {
 });
 
 // api to repost a user'post
-postsRouter.post(
-  "/posts/repost/:postId",
-  userAuthentication,
-  async (req, res) => {
+postsRouter.post( "/posts/repost/:postId", userAuthentication,async (req, res) => {
     try {
       const postId = req.params.postId;
       const post = await Post.findById(postId);
@@ -90,21 +89,58 @@ postsRouter.post(
           .status(404)
           .send({ success: false, message: "Post not found" });
       }
+
+      const originalPostId = post.isRepost && post.originalPostId
+        ? post.originalPostId
+        : post._id;
+      const originalPost = await Post.findById(originalPostId);
+
+      if (!originalPost) {
+        return res
+          .status(404)
+          .send({ success: false, message: "Original post not found" });
+      }
+
+      const alreadyReposted = await Post.findOne({
+        userId: req.user._id,
+        isRepost: true,
+        originalPostId,
+      });
+
+      if (alreadyReposted) {
+        return res.status(400).send({
+          success: false,
+          error: "You have already reposted this post",
+        });
+      }
+
+      const repostCount = (originalPost.repostCount || 0) + 1;
+
       const repost = new Post({
         postContent: post.postContent,
         media: post.media,
         visibility: post.visibility,
         userId: req.user._id,
+        isRepost: true,
+        originalPostId,
         repostAuthorName: req.user.firstName + " " + req.user.lastName,
         repostAuthorAvatar: req.user.photoUrl,
         authorName: post.authorName,
         authorAvatar: post.authorAvatar,
+        repostCount,
+        likes:post.likes,
+        likeByUsers:post.likeByUsers
       });
       await repost.save();
+      await Post.findByIdAndUpdate(originalPostId, { repostCount });
+      // await repost.populate(
+      //   "originalPostId",
+      //   "postContent media userId visibility likes authorName authorAvatar repostCount likeByUsers createdAt updatedAt",
+      // );
       res.status(200).send({
         success: true,
         message: "Repost created successfully",
-        data: repost,
+        // data: repost,
       });
     } catch (err) {
       res.status(400).send({ success: false, error: err.message });
@@ -116,22 +152,44 @@ postsRouter.post(
 postsRouter.post("/posts/like", userAuthentication, async (req, res) => {
   try {
     const { postId } = req.body;
+    if (!isValidPostId(postId)) {
+      return res
+        .status(400)
+        .send({ success: false, error: "Valid postId is required" });
+    }
+
     const post = await Post.findById(postId);
     if (!post)
       return res
         .status(404)
-        .send({ success: false, message: "Post not found" });
+        .send({ success: false, error: "Original post not found" });
 
-    const alreadyLiked = post.likeByUsers.includes(req.user._id);
+    const originalPostId = post.isRepost && post.originalPostId
+      ? post.originalPostId
+      : postId;
+
+    const originalPost = await Post.findById(originalPostId);
+    const alreadyLiked = originalPost.likeByUsers.some(
+      (likedUserId) => likedUserId.toString() === req.user._id.toString(),
+    );
+
     if (alreadyLiked) {
       await Post.findOneAndUpdate(
-        { _id: postId, likes: { $gt: 0 } },
+        { _id: originalPostId, likes: { $gt: 0 } },
+        { $inc: { likes: -1 }, $pull: { likeByUsers: req.user._id } },
+      );
+      await Post.updateMany(
+        { originalPostId, likes: { $gt: 0 } },
         { $inc: { likes: -1 }, $pull: { likeByUsers: req.user._id } },
       );
     } else {
-      await Post.findByIdAndUpdate(postId, {
+      await Post.findByIdAndUpdate(originalPostId, {
         $inc: { likes: 1 },
-        $push: { likeByUsers: req.user._id },
+        $addToSet: { likeByUsers: req.user._id },
+      });
+      await Post.updateMany({ originalPostId }, {
+        $inc: { likes: 1 },
+        $addToSet: { likeByUsers: req.user._id },
       });
     }
     res.status(200).send({
@@ -144,15 +202,27 @@ postsRouter.post("/posts/like", userAuthentication, async (req, res) => {
 });
 // to delete a post
 
-postsRouter.post("/posts/delete/:postId",userAuthentication,async (req, res) => {
+postsRouter.delete("/posts/delete/:postId",userAuthentication,async (req, res) => {
     try {
       const postId = req.params.postId;
-      const post = await Post.findById(postId);
+      if (!isValidPostId(postId)) {
+        return res
+          .status(400)
+          .send({ success: false, error: "Valid postId is required" });
+      }
+      const post = await Post.findById(postId); 
       if (!post) {
         return res
           .status(404)
-          .send({ success: false, message: "Post not found" });
+          .send({ success: false, error: "Post not found" });
       }
+      if(post.userId.toString() !== req.user._id.toString()){
+        return res
+          .status(400)
+          .send({ success: false, error: "You are not allowed to delete this post" });
+      }
+      //chck this postid is equal to any repostid in db if have then delete that repost also
+      await Post.deleteMany({ originalPostId: postId });
       await post.deleteOne();
       res.status(200).send({
         success: true,
@@ -164,7 +234,7 @@ postsRouter.post("/posts/delete/:postId",userAuthentication,async (req, res) => 
   },
 );
 // to edit the post
-postsRouter.post("/posts/edit/:postId",userAuthentication,async (req, res) => {
+postsRouter.put("/posts/edit/:postId",userAuthentication,async (req, res) => {
     try {
       const postId = req.params.postId;
       const post = await Post.findById(postId);
@@ -173,7 +243,9 @@ postsRouter.post("/posts/edit/:postId",userAuthentication,async (req, res) => {
           .status(404)
           .send({ success: false, message: "Post not found" });
       }
-      const updatedPost = await Post.findByIdAndUpdate(postId, req.body);
+      const updatedPost = await Post.findByIdAndUpdate(postId, req.body, { new: true });
+      //chck this postid is equal to any repostid in db if have then update that repost also
+      await Post.updateMany({ originalPostId: postId }, req.body);
       res.status(200).send({
         success: true,
         message: "Post updated successfully",
