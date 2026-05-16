@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const postsRouter = express.Router();
 const { userAuthentication } = require("../middlewares/auth");
 const Post = require("../models/post");
+const ConnectionRequest = require("../models/connectionRequest");
 
 const isValidPostId = (postId) => mongoose.Types.ObjectId.isValid(postId);
 
@@ -59,13 +60,26 @@ postsRouter.get("/user/posts/:userId", userAuthentication, async (req, res) => {
   }
 });
 
-// get all posts except loggedin user
+// get posts made by users connected to the loggedin user
 postsRouter.get("/user/allposts", userAuthentication, async (req, res) => {
   try {
     const { page = 1, limit = 10 } = req.query;
     const skip = (page - 1) * limit;
-    //  const posts = await Post.find({ userId: { $ne: req.user._id } }).sort({ createdAt: -1 });
-    const posts = await Post.find()
+
+    const connectionRequests = await ConnectionRequest.find({
+      $or: [
+        { fromUserId: req.user._id, status: "accepted" },
+        { toUserId: req.user._id, status: "accepted" },
+      ],
+    }).select("fromUserId toUserId");
+
+    const connectedUserIds = connectionRequests.map((connectionRequest) =>
+      connectionRequest.fromUserId.toString() === req.user._id.toString()
+        ? connectionRequest.toUserId
+        : connectionRequest.fromUserId,
+    );
+    // find post of all connected users
+    const posts = await Post.find({ userId: { $in: connectedUserIds } })
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(Number(limit));
@@ -256,6 +270,23 @@ postsRouter.put("/posts/edit/:postId",userAuthentication,async (req, res) => {
     }
   },
 );
+
+// ---------------------------------------------------------NOT USED NOW---------------------------------------------------------------------
+// to get user info which iked the post
+postsRouter.get("/user/likes/:postId", userAuthentication, async (req, res) => {
+  try {
+    const likedUsersData = await Post.find({_id:req.params.postId})
+    .populate("likeByUsers", "firstName lastName photoUrl")
+
+    res.status(200).send({
+      success: true,
+      message: "Users who liked the post fetched successfully",
+      data: likedUsersData,
+    });
+  } catch (err) {
+    res.status(400).send({ success: false, error: err.message });
+  }
+});
 
 
 module.exports = { postsRouter };

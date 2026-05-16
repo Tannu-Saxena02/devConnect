@@ -19,6 +19,7 @@ const  initializeSocket  = require("./utils/socket.js");
 const chatRouter = require('./routes/chat.js');
 const paymentRouter = require('./routes/payment.js');
 const { postsRouter } = require("./routes/posts.js");
+const commentsRouter = require("./routes/comments.js");
 const allowedOrigins = [
   'http://localhost:5173',
   'https://devconnect.world',
@@ -41,6 +42,7 @@ app.use("/",otpRouter);
 app.use("/",chatRouter);
 app.use("/",paymentRouter);
 app.use("/",postsRouter);
+app.use("/",commentsRouter);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec, { explorer: true }));
 const server=http.createServer(app);
 initializeSocket(server);
